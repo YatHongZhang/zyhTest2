@@ -45,7 +45,7 @@ public class BaseTest {
         }
 
         Thread.sleep(3000);
-        log.info("over");
+        log.info("over~!~!~!~!");
     }
 
 

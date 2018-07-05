@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property resource="application.properties" />
+
+    <!-- 控制台日志打印 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
+            <!-- %-5level 左对齐显示日志等级,共占5格 -->
+            <!--程序中用MDC.putTraceLogId("键名","键值")设置，%X{键名}可动态设置 -->
+            <!--[%date] [%-5level] [%thread] %logger %line [%X{traceLogId}] %msg%n-->
+            <Pattern>[%date] [%level] [%thread] %logger %line -- [%X{traceLogId}] %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志文件 -->
+    <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>/app/log/app-business/app-business.log</File>
+        <encoder>
+            <Pattern>[%date] [%level] [%thread] %logger %line -- [%X{traceLogId}] %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/app/log/app-business/app-business-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>180</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>512MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!--sql语句输出-->
+    <logger level="DEBUG" name="com.seebon.shabao.appbusiness.dal" additivity="${showSql}" />
+
+    <root level="INFO">
+        <appender-ref ref="${appenderRef}"/>
+    </root>
+
+</configuration>

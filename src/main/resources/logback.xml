@@ -30,10 +30,10 @@
     </appender>
 
     <!--sql语句输出-->
-    <logger level="DEBUG" name="com.seebon.shabao.appbusiness.dal" additivity="${showSql}" />
+    <logger level="DEBUG" name="com.seebon.shabao.appbusiness.dal" additivity="true" />
 
     <root level="INFO">
-        <appender-ref ref="${appenderRef}"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 
 </configuration>

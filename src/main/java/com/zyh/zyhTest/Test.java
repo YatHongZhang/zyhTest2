@@ -75,6 +75,13 @@ public class Test {
 
         System.out.println(str);*/
 
+        String eventKey = "_aaaaaaaaaaaaaaaaaa";
+        int index = eventKey.indexOf("_");
+        System.out.println("aaaaaa"+index);
+        //根据第一个"_"进行切割
+        String type = eventKey.substring(0,index);
+        System.out.println(type);
+
 
 
 

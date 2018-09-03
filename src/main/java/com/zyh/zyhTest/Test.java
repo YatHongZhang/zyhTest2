@@ -9,8 +9,10 @@ import lombok.Data;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by YatHong on 2018/6/4/0004.
@@ -23,7 +25,8 @@ public class Test {
         jsonObject.put("companyId","3ab91e09516f4dee990936cd991c0b19");
         jsonObject.put("effectDate","2018-06-12");
         jsonObject.put("operatorName","1010284");
-        String str = "shangbaozengyuan!!" + jsonObject.toString();
+        System.out.println(jsonObject);*/
+        /*String str = "shangbaozengyuan!!" + jsonObject.toString();
         System.out.println(str);
         String encode = URLEncoder.encode(str,"UTF-8");
         System.out.println(encode);
@@ -75,16 +78,10 @@ public class Test {
 
         System.out.println(str);*/
 
-        String eventKey = "_aaaaaaaaaaaaaaaaaa";
-        int index = eventKey.indexOf("_");
-        System.out.println("aaaaaa"+index);
-        //根据第一个"_"进行切割
-        String type = eventKey.substring(0,index);
-        System.out.println(type);
-
-
-
-
+        List<String> list = null;
+        for(String str : list){
+            System.out.println(str);
+        }
 
     }
 

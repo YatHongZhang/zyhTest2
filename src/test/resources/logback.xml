@@ -8,8 +8,8 @@
         <encoder charset="UTF-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
             <!-- %-5level 左对齐显示日志等级,共占5格 -->
             <!--程序中用MDC.putTraceLogId("键名","键值")设置，%X{键名}可动态设置 -->
-            <!--[%date] [%-5level] [%thread] %logger %line [%X{traceLogId}] %msg%n-->
-            <Pattern>[%date] [%level] [%thread] %logger %line -- [%X{traceLogId}] %msg%n</Pattern>
+            <!--[%date] [%level] [%thread] %logger %line [%X{traceLogId}] %msg%n-->
+            <Pattern>[%date] [%level] [%thread] %line -- [%X{traceLogId}] %msg%n</Pattern>
         </encoder>
     </appender>
 

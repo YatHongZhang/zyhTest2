@@ -60,7 +60,7 @@ public class Test {
         String[] date = arr[0].split("-");
         String[] time = arr[1].split(":");
         long systemTime = System.currentTimeMillis();
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getProxyInstance();
         cal.set(Calendar.YEAR,Integer.parseInt(date[0]));
         cal.set(Calendar.MONTH,Integer.parseInt(date[1])-1);
         cal.set(Calendar.DATE,Integer.parseInt(date[2]));

@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by YatHong on 2018/7/31/0031.
+ * 限流
  */
 @Slf4j
 public class TestRateLimiter {

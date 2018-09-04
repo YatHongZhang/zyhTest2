@@ -1,5 +1,7 @@
 package com.zyh.zyhTest.designPatterns.proxy;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -7,6 +9,7 @@ import java.lang.reflect.Proxy;
 /**
  * Created by YatHong on 2018/9/4/0004.
  */
+@Slf4j
 public class ProxyCreater<T> implements InvocationHandler {
 
     private T origin;
@@ -17,9 +20,9 @@ public class ProxyCreater<T> implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("进入增强");
+        log.info("进入增强,调用方法:{},方法参数:{}",method,args);
         Object obj = method.invoke(origin,args);
-        System.out.println("增强结束");
+        log.info("增强结束");
         return obj;
     }
 

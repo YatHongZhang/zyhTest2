@@ -29,4 +29,23 @@ public class ProxyCreater<T> implements InvocationHandler {
     public T getProxyInstance(){
         return (T)Proxy.newProxyInstance(origin.getClass().getClassLoader(),origin.getClass().getInterfaces(),this);
     }
+
+
+    /**
+     * 测试
+     */
+    public static void main(String[] args) {
+        User user = new UserImpl("张三",99) ;
+
+        ProxyCreater<User> proxyCreater = new ProxyCreater<>(user);
+
+        User newUser = proxyCreater.getProxyInstance();
+
+        newUser.printName();
+
+        System.out.println("------------------");
+
+        System.out.println("返回年龄:" + newUser.getAge());
+
+    }
 }

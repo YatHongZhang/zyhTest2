@@ -7,7 +7,7 @@ public class ObserverTest {
 
     public static void main(String[] args) {
         Police p1 = new Police("AE86");
-        Police p2 = new Police("9257");
+        Police p2 = new Police("9527");
         Police p3 = new Police("0101");
 
         Thief t1 = new Thief("耗子");

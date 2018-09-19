@@ -1,8 +1,11 @@
-package com.zyh.zyhTest.designPatterns.proxy;
+package com.zyh.zyhTest.designPatterns.proxy.jdk;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by YatHong on 2018/9/4/0004.
  */
+@Slf4j
 public class UserImpl implements User {
     private String name;
     private int age;
@@ -14,12 +17,12 @@ public class UserImpl implements User {
 
     @Override
     public void printName() {
-        System.out.println("名字叫" + this.name);
+        log.info("名字叫{}", this.name);
     }
 
     @Override
     public int getAge() {
-        System.out.println("获取年龄");
+        log.info("获取年龄");
         return this.age;
     }
 }

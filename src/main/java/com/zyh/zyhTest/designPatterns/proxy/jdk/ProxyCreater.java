@@ -1,7 +1,11 @@
-package com.zyh.zyhTest.designPatterns.proxy;
+package com.zyh.zyhTest.designPatterns.proxy.jdk;
 
 import lombok.extern.slf4j.Slf4j;
+import sun.misc.ProxyGenerator;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -35,6 +39,7 @@ public class ProxyCreater<T> implements InvocationHandler {
      * 测试
      */
     public static void main(String[] args) {
+
         User user = new UserImpl("张三",99) ;
 
         ProxyCreater<User> proxyCreater = new ProxyCreater<>(user);
@@ -43,9 +48,23 @@ public class ProxyCreater<T> implements InvocationHandler {
 
         newUser.printName();
 
-        System.out.println("------------------");
+        log.info("------------------");
 
-        System.out.println("返回年龄:" + newUser.getAge());
+        //打印代理类的类名
+        log.info(newUser.getClass().getName());
+
+        //获取代理类字节数组
+        byte[] bytes = ProxyGenerator.generateProxyClass("$Proxy2",new Class[]{User.class});
+        try {
+            FileOutputStream fos = new FileOutputStream("D://$Proxy2.class");
+            fos.write(bytes);
+            fos.flush();
+            fos.close();
+            log.info("输出文件成功");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

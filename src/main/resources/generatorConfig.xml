@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+    <classPathEntry location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.42\mysql-connector-java-5.1.42.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.42.241:3306/dev_vip_common"
+                        userId="dev"
+                        password="dev2018" />
+
+        <!--实体类-->
+        <javaModelGenerator targetPackage="com.zyh.zyhTest.mybatis.entity"
+                            targetProject="D:\projects\" >
+        </javaModelGenerator>
+
+        <!--xml映射文件-->
+        <sqlMapGenerator targetPackage="zyh.mapper" targetProject="D:\projects\" />
+
+        <!--java接口-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zyh.zyhTest.mybatis.dao"
+                             targetProject="D:\projects\">
+        </javaClientGenerator>
+
+        <table tableName="t_test_user" domainObjectName="TestUser"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+    </context>
+</generatorConfiguration>

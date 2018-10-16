@@ -24,7 +24,9 @@ public class Test {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        TestUserMapper mapper = getSqlSession().getMapper(TestUserMapper.class);
+        SqlSession sqlSession = getSqlSession();
+        TestUserMapper mapper = sqlSession.getMapper(TestUserMapper.class);
+        //1.找到sql 2.设置参数 3.执行sql 4.结果映射
         TestUser user = mapper.selectByPrimaryKey(1);
         System.out.println(user);
     }

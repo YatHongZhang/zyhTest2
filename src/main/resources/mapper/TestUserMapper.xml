@@ -1,78 +1,103 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zyh.zyhTest.mybatis.dao.TestUserMapper" >
-  <resultMap id="BaseResultMap" type="com.zyh.zyhTest.mybatis.entity.TestUser" >
-    <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
-    <result column="AGE" property="age" jdbcType="TINYINT" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyh.zyhTest.mybatis.dao.TestUserMapper">
+
+  <resultMap id="BaseResultMap" type="com.zyh.zyhTest.mybatis.entity.TestUser">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="AGE" jdbcType="TINYINT" property="age" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
 
-  <sql id="Base_Column_List" >
-    ID, USER_NAME, AGE
+  <sql id="Base_Column_List">
+    ID, USER_NAME, AGE, CREATE_TIME
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from t_test_user
     where ID = #{id,jdbcType=INTEGER}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_test_user
     where ID = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser" >
-    insert into t_test_user (ID, USER_NAME, AGE
-      )
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{age,jdbcType=TINYINT}
-      )
+  <insert id="insert" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser">
+    insert into t_test_user (ID, USER_NAME, AGE,
+    CREATE_TIME)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{age,jdbcType=TINYINT},
+    #{createTime,jdbcType=TIMESTAMP})
   </insert>
 
-  <insert id="insertSelective" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser" >
+  <insert id="insertSelective" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser">
     insert into t_test_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         ID,
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         USER_NAME,
       </if>
-      <if test="age != null" >
+      <if test="age != null">
         AGE,
       </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userName != null" >
+      <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
+      <if test="age != null">
         #{age,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser">
     update t_test_user
-    <set >
-      <if test="userName != null" >
+    <set>
+      <if test="userName != null">
         USER_NAME = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
+      <if test="age != null">
         AGE = #{age,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser" >
+  <update id="updateByPrimaryKey" parameterType="com.zyh.zyhTest.mybatis.entity.TestUser">
     update t_test_user
     set USER_NAME = #{userName,jdbcType=VARCHAR},
-      AGE = #{age,jdbcType=TINYINT}
+    AGE = #{age,jdbcType=TINYINT},
+    CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_test_user
+    (
+    USER_NAME, AGE , Create_time
+    )
+    values
+    <foreach collection="list" item="user" index="index" separator=",">
+      (
+      #{user.userName,jdbcType=VARCHAR},#{user.age,jdbcType=TINYINT},#{user.createTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
 </mapper>

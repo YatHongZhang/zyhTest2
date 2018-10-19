@@ -1,14 +1,21 @@
 package com.zyh.zyhTest.mybatis.entity;
 
-import lombok.ToString;
+import java.util.Date;
 
-@ToString
 public class TestUser {
     private Integer id;
 
     private String userName;
 
     private Byte age;
+
+    private Date createTime;
+
+    public TestUser(String userName, Byte age, Date createTime) {
+        this.userName = userName;
+        this.age = age;
+        this.createTime = createTime;
+    }
 
     public Integer getId() {
         return id;
@@ -32,5 +39,13 @@ public class TestUser {
 
     public void setAge(Byte age) {
         this.age = age;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

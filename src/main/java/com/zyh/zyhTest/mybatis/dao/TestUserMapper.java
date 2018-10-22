@@ -21,4 +21,6 @@ public interface TestUserMapper {
     int batchInsert(@Param(value = "list")List<TestUser> list);
 
 
+
+
 }

@@ -11,6 +11,9 @@ public class TestUser {
 
     private Date createTime;
 
+    public TestUser() {
+    }
+
     public TestUser(String userName, Byte age, Date createTime) {
         this.userName = userName;
         this.age = age;

@@ -24,13 +24,14 @@ public class ProxyCreater<T> implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        log.info("进入增强,调用方法:{},方法参数:{}",method,args);
+        log.info("进入增强,代理类:{},调用方法:{},方法参数:{}",proxy.getClass().getName(),method,args);
         Object obj = method.invoke(origin,args);
         log.info("增强结束");
         return obj;
     }
 
     public T getProxyInstance(){
+        log.info("{}的类加载器,接口:{},对象:{}",origin.getClass().getName(),origin.getClass().getInterfaces(),this);
         return (T)Proxy.newProxyInstance(origin.getClass().getClassLoader(),origin.getClass().getInterfaces(),this);
     }
 
@@ -50,11 +51,8 @@ public class ProxyCreater<T> implements InvocationHandler {
 
         log.info("------------------");
 
-        //打印代理类的类名
-        log.info(newUser.getClass().getName());
-
         //获取代理类字节数组
-        byte[] bytes = ProxyGenerator.generateProxyClass("$Proxy2",new Class[]{User.class});
+        /*byte[] bytes = ProxyGenerator.generateProxyClass("$Proxy2",new Class[]{User.class});
         try {
             FileOutputStream fos = new FileOutputStream("D://$Proxy2.class");
             fos.write(bytes);
@@ -63,7 +61,7 @@ public class ProxyCreater<T> implements InvocationHandler {
             log.info("输出文件成功");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
     }

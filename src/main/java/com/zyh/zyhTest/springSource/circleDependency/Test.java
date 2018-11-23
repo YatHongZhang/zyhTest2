@@ -13,8 +13,8 @@ import java.net.URLEncoder;
  */
 public class Test {
     public static void main(String[] args) throws Exception{
-        //BeanFactory bf = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
-        //bf.getBean("testA");
+        BeanFactory bf = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
+        bf.getBean("testA");
 
         /*ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
         ac.getBean("testA");

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import sun.misc.ProxyGenerator;
 
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -16,23 +15,32 @@ import java.lang.reflect.Proxy;
 @Slf4j
 public class ProxyCreater<T> implements InvocationHandler {
 
-    private T origin;
+    private T originObj;
 
     public ProxyCreater(T origin) {
-        this.origin = origin;
+        this.originObj = origin;
     }
 
+
+    /**
+     * 代理对象在调用方法的时候,都是调用invoke方法
+     * @param proxyObj 代理对象
+     * @param method 代理对象调用的方法
+     * @param args 方法参数
+     * @return
+     * @throws Throwable
+     */
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        log.info("进入增强,代理类:{},调用方法:{},方法参数:{}",proxy.getClass().getName(),method,args);
-        Object obj = method.invoke(origin,args);
+    public Object invoke(Object proxyObj, Method method, Object[] args) throws Throwable {
+        log.info("进入增强,代理类:{},调用方法:{},方法参数:{}",proxyObj.getClass().getName(),method,args);
+        Object obj = method.invoke(originObj,args);
         log.info("增强结束");
         return obj;
     }
 
     public T getProxyInstance(){
-        log.info("{}的类加载器,接口:{},对象:{}",origin.getClass().getName(),origin.getClass().getInterfaces(),this);
-        return (T)Proxy.newProxyInstance(origin.getClass().getClassLoader(),origin.getClass().getInterfaces(),this);
+        log.info("{}的类加载器,接口:{},对象:{}", originObj.getClass().getName(), originObj.getClass().getInterfaces(),this);
+        return (T)Proxy.newProxyInstance(originObj.getClass().getClassLoader(), originObj.getClass().getInterfaces(),this);
     }
 
 
@@ -52,7 +60,7 @@ public class ProxyCreater<T> implements InvocationHandler {
         log.info("------------------");
 
         //获取代理类字节数组
-        /*byte[] bytes = ProxyGenerator.generateProxyClass("$Proxy2",new Class[]{User.class});
+        byte[] bytes = ProxyGenerator.generateProxyClass("$Proxy2",new Class[]{User.class});
         try {
             FileOutputStream fos = new FileOutputStream("D://$Proxy2.class");
             fos.write(bytes);
@@ -61,7 +69,7 @@ public class ProxyCreater<T> implements InvocationHandler {
             log.info("输出文件成功");
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
 
     }

@@ -78,10 +78,38 @@ public class Test {
 
         System.out.println(str);*/
 
-        List<String> list = null;
+        List<String> list = new ArrayList<>();
+        list.add("3");
+        list.add("2");
+        list.add("1");
         for(String str : list){
-            System.out.println(str);
+            switch(str){
+                case "1":{
+                    if("1".equals(str)){
+                        System.out.println("if 代码块");
+                        continue;
+                    }else if ("2".equals(str)){
+                        System.out.println("else if 代码块");
+                        break;
+                    }else{
+                        System.out.println("else 代码块");
+                        break;
+                    }
+
+                }
+                case "2":{
+                    System.out.println("case2代码块");
+                    break;
+                }
+                case "3":{
+                    System.out.println("case3代码块");
+                    break;
+                }
+                default:{}
+            }
+            System.out.println("for循环结束");
         }
+
 
     }
 

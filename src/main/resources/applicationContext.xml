@@ -8,24 +8,23 @@
        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
        default-lazy-init="false">
 
+    <aop:aspectj-autoproxy />
 
-    <!--
-
-    <bean id="testA" class="com.zyh.zyhTest.springeDependency.TestA" >
+    <bean id="testA" class="com.zyh.zyhTest.spring.start.TestA" >
         <property name="b" ref="testB" />
     </bean>
 
-    <bean id="testB" class="com.zyh.zyhTest.springeDependency.TestB">
+    <bean id="testB" class="com.zyh.zyhTest.spring.start.TestB">
         <property name="a" ref="testA" />
     </bean>
 
 
+
+
+    <!--
+
     <import resource="spring-dao.xml"/>
 
     -->
-
-    <aop:aspectj-autoproxy />
-
-
 
 </beans>

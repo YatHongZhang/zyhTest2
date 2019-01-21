@@ -1,4 +1,4 @@
-package com.zyh.zyhTest.rmi;
+package com.zyh.zyhTest.distributed.rmi;
 
 import java.rmi.Remote;
 

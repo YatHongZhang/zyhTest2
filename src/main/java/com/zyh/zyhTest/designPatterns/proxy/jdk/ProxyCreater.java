@@ -15,6 +15,9 @@ import java.lang.reflect.Proxy;
 @Slf4j
 public class ProxyCreater<T> implements InvocationHandler {
 
+    /**
+     * 被代理对象, 是一个接口的实现类
+     */
     private T originObj;
 
     public ProxyCreater(T origin) {
@@ -38,6 +41,10 @@ public class ProxyCreater<T> implements InvocationHandler {
         return obj;
     }
 
+    /**
+     * 获取代理对象
+     * @return
+     */
     public T getProxyInstance(){
         log.info("{}的类加载器,接口:{},对象:{}", originObj.getClass().getName(), originObj.getClass().getInterfaces(),this);
         return (T)Proxy.newProxyInstance(originObj.getClass().getClassLoader(), originObj.getClass().getInterfaces(),this);

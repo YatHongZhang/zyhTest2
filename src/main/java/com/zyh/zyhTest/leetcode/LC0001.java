@@ -395,5 +395,54 @@ public class LC0001 {
     }
 
 
+    /**
+     * 66 加一
+     给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+     最高位数字存放在数组的首位， 数组中每个元素只存储一个数字。
+     你可以假设除了整数 0 之外，这个整数不会以零开头。
+     示例 1:
+     输入: [1,2,3]
+     输出: [1,2,4]
+     解释: 输入数组表示数字 123。
+     示例 2:
+     输入: [4,3,2,1]
+     输出: [4,3,2,2]
+     解释: 输入数组表示数字 4321。
+     */
+    public int[] plusOne(int[] digits) {
+        boolean add1 = false;
+        int sum;
+        int i=digits.length-1;
+        while(i>=0){
+            if(add1 || i==digits.length-1){
+                sum = 1;
+                add1 = false;
+            }else {
+                sum = 0;
+            }
+            if(sum == 0){
+                return digits;
+            }
+
+            sum += digits[i];
+            if(sum >= 10){
+                add1 = true;
+                sum -= 10;
+            }
+            digits[i] = sum;
+            i--;
+            if(i<0 && add1){
+                int[] a = new int[digits.length + 1];
+                a[0] = 1;
+                for(int k=1; k<a.length ; k++){
+                    a[k] = digits[k-1];
+                }
+                return a;
+            }
+        }
+        return digits;
+    }
+
+
 
 }

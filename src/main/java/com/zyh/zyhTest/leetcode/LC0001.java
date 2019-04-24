@@ -334,9 +334,9 @@ public class LC0001 {
                 bitSum %= 10;
             }
             result.val = bitSum;
-            if(l1end && l2end && biggerThan10){
-                result.next = new ListNode(1);
-            }
+        }
+        if(biggerThan10){
+            result.next = new ListNode(1);
         }
         return resultFirst;
     }
@@ -345,6 +345,73 @@ public class LC0001 {
         int val;
         ListNode next;
         ListNode(int x) { val = x; }
+    }
+
+    /**
+     * 445 两数相加II
+     给定两个非空链表来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储单个数字。将这两数相加会返回一个新的链表。
+     你可以假设除了数字 0 之外，这两个数字都不会以零开头。
+     进阶:
+     如果输入链表不能修改该如何处理？换句话说，你不能对列表中的节点进行翻转。
+     示例:
+     输入: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
+     输出: 7 -> 8 -> 0 -> 7
+     */
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        StringBuilder sb = new StringBuilder();
+        String s1 = null, s2 = null;
+        while(l1 != null){
+            sb.append(l1.val);
+            l1 = l1.next;
+        }
+        s1 = sb.toString();
+        sb.delete(0,sb.length());
+        while(l2 != null){
+            sb.append(l2.val);
+            l2 = l2.next;
+        }
+        s2 = sb.toString();
+        sb.delete(0,sb.length());
+        int i = s1.length()-1, j = s2.length()-1;
+        boolean add1 = false;
+        int bitSum=0;
+        while (i >= 0 || j >= 0){
+            if(add1){
+                bitSum = 1;
+                add1 = false;
+            }else{
+                bitSum = 0;
+            }
+            if(i>=0){
+                bitSum += (s1.charAt(i)-48);
+                i--;
+            }
+            if(j>=0){
+                bitSum += (s2.charAt(j)-48);
+                j--;
+            }
+            if(bitSum >= 10){
+                add1 = true;
+                bitSum -= 10;
+            }
+            sb.append(bitSum);
+        }
+        if(add1){
+            sb.append(1);
+        }
+        ListNode first= new ListNode(0);
+        ListNode node = first;
+        int k = sb.length()-1;
+        while(k>=0){
+            if(k==sb.length()-1){
+                first.val = (sb.charAt(k)-48);
+            }else{
+                node.next = new ListNode(sb.charAt(k)-48);
+                node = node.next;
+            }
+            k--;
+        }
+        return first;
     }
 
 
@@ -386,13 +453,13 @@ public class LC0001 {
                 bitSum %= 2;
             }
             sb.append(bitSum);
-
-            if(i<0 && j<0 && add1){
-                sb.append(1);
-            }
+        }
+        if(add1){
+            sb.append(1);
         }
         return sb.reverse().toString();
     }
+
 
 
     /**
@@ -441,6 +508,21 @@ public class LC0001 {
             }
         }
         return digits;
+    }
+
+
+    /**
+     * 876. 链表的中间结点
+     给定一个带有头结点 head 的非空单链表，返回链表的中间结点。
+     如果有两个中间结点，则返回第二个中间结点。
+     */
+    public ListNode middleNode(ListNode head) {
+        ListNode x1 = head,x2 = head;
+        while(x2 != null && x2.next != null){
+            x1=x1.next;
+            x2=x2.next.next;
+        }
+        return x1;
     }
 
 

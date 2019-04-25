@@ -1,9 +1,6 @@
 package com.zyh.zyhTest.leetcode;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author YatHong on 2019/4/18/0018
@@ -227,12 +224,10 @@ public class LC0001 {
         return sum;
     }
 
-
     /**
      * 14 最长公共前缀
      * 编写一个函数来查找字符串数组中的最长公共前缀。
      如果不存在公共前缀，返回空字符串 ""。
-
      示例 1:
      输入: ["flower","flow","flight"]
      输出: "fl"
@@ -340,7 +335,6 @@ public class LC0001 {
         }
         return resultFirst;
     }
-
     class ListNode {
         int val;
         ListNode next;
@@ -414,7 +408,6 @@ public class LC0001 {
         return first;
     }
 
-
     /**
      * 67 二进制求和
      给定两个二进制字符串，返回他们的和（用二进制表示）。
@@ -459,8 +452,6 @@ public class LC0001 {
         }
         return sb.reverse().toString();
     }
-
-
 
     /**
      * 66 加一
@@ -605,6 +596,131 @@ public class LC0001 {
         return num;
     }
 
+    /**
+     * 20 有效的括号
+     给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+     有效字符串需满足：
+     左括号必须用相同类型的右括号闭合。
+     左括号必须以正确的顺序闭合。
+     注意空字符串可被认为是有效字符串。
+     示例 1:
+     输入: "()"
+     输出: true
+     示例 2:
+     输入: "()[]{}"
+     输出: true
+     示例 3:
+     输入: "(]"
+     输出: false
+     示例 4:
+     输入: "([)]"
+     输出: false
+     示例 5:
+     输入: "{[]}"
+     输出: true
+     */
+    public boolean isValid(String s) {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            switch(c){
+                case '(':{
+                    sb.append(")");
+                    break;}
+                case '[':{
+                    sb.append("]");
+                    break;}
+                case '{':{
+                    sb.append("}");
+                    break;}
+                case ')':{
+                    if(sb.length()>0 && sb.charAt(sb.length()-1) == ')'){
+                        sb.delete(sb.length()-1, sb.length());
+                    }else{
+                        return false;
+                    }
+                    break;}
+                case ']':{
+                    if(sb.length()>0 && sb.charAt(sb.length()-1) == ']'){
+                        sb.delete(sb.length()-1, sb.length());
+                    }else{
+                        return false;
+                    }
+                    break;}
+                case '}':{
+                    if(sb.length()>0 && sb.charAt(sb.length()-1) == '}'){
+                        sb.delete(sb.length()-1, sb.length());
+                    }else{
+                        return false;
+                    }
+                    break;}
+                default:break;
+            }
+        }
+        return sb.length()==0? true:false;
+    }
 
+
+    /**
+     * 22 括号生成 中等
+     * 给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。
+     例如，给出 n = 3，生成结果为：
+     [
+     "((()))",
+     "(()())",
+     "(())()",
+     "()(())",
+     "()()()"
+     ]
+     */
+    public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        generateParenthesis("(",list,n-1,n,1);
+        return list;
+    }
+    private void generateParenthesis(String str, List<String> list, int x, int y, int sum){
+        if(x > 0){
+            generateParenthesis(str + "(", list, x-1, y, sum+1);
+        }
+        if(y>0 && sum>0){
+            if(x==0 && y==1){
+                list.add(str + ")");
+            }else{
+                generateParenthesis(str + ")", list, x, y-1, sum-1);
+            }
+        }
+    }
+
+    /**
+     * 21 合并两个有序链表  将两个有序链表合并为一个新的有序链表并返回
+     输入：1->2->4, 1->3->4
+     输出：1->1->2->3->4->4
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode first = new ListNode(0);
+        ListNode node = first;
+        while(l1 != null || l2 != null){
+            if(l1 != null && l2 != null){
+                if(l1.val < l2.val){
+                    node.next = new ListNode(l1.val);
+                    node = node.next;
+                    l1 = l1.next;
+                }else{
+                    node.next = new ListNode(l2.val);
+                    node = node.next;
+                    l2 = l2.next;
+                }
+            }else if(l1 != null){
+                node.next = new ListNode(l1.val);
+                node = node.next;
+                l1 = l1.next;
+            }else{
+                node.next = new ListNode(l2.val);
+                node = node.next;
+                l2 = l2.next;
+            }
+        }
+        return first.next;
+    }
 
 }

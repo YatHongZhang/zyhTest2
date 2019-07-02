@@ -2,6 +2,7 @@ package com.zyh.zyhTest.designPatterns.wrapper;
 
 /**
  * Created by YatHong on 2018/9/12/0012.
+ * 装饰器模式
  */
 public class WrapperTest {
     public static void main(String[] args) {

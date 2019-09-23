@@ -96,11 +96,11 @@
 			<version>1.2.30</version>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>com.seebon.shabao</groupId>
 			<artifactId>commons</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>cglib</groupId>
@@ -174,13 +174,13 @@
 			</exclusions>
 		</dependency>
 		<!--dubbo-->
-		<!--
+
 		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
-			<version>2.1-gamma</version>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
 		</dependency>
-		-->
+
 
 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>

@@ -1,14 +1,19 @@
 package com.zyh.zyhTest;
 
 
+import com.zyh.zyhTest.utils.GroupEnum;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by YatHong on 2018/6/4/0004.
@@ -16,9 +21,48 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) throws Exception{
-        new Test().write2Console();
-        System.out.println(2/0);
+        new Test().testCloseStream();
+        //System.out.println(UUID.randomUUID().toString());
+    }
 
+    public void testCloseStream() throws Exception{
+        KeyGenerator kgen = KeyGenerator.getInstance("AES");
+        kgen.init(128, new SecureRandom("asdfasdfasdfasdf".getBytes()));
+        SecretKey secretKey = kgen.generateKey();
+        byte[] enCodeFormat = secretKey.getEncoded();
+        SecretKeySpec skeySpec = new SecretKeySpec(enCodeFormat, "AES");
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.ENCRYPT_MODE,secretKey);
+
+        InputStream in = new FileInputStream("D:\\aaa.txt");
+        CipherInputStream cipherInputStream = new CipherInputStream(in,cipher);
+        cipherInputStream.close();
+        in.close();
+    }
+
+    public void testLength(){
+        String str = "你好机器人好了好了我知道了";
+        System.out.println(str.length());
+        System.out.println(str.getBytes().length);
+    }
+
+    public void testEnum(){
+        String str = "gg";
+        GroupEnum ee = GroupEnum.valueOf(str);
+        System.out.println(ee.toString());
+        System.out.println(GroupEnum.Gj.toString());
+        System.out.println(ee.name());
+        System.out.println(GroupEnum.Gj.name());
+        System.out.println(ee.getGroupId());
+        System.out.println(ee.getGroupIdCn());
+    }
+
+
+    public void testReplace(){
+        String str ="https://api.tongdun.cn/adssdfdfdf";
+        System.out.println(str);
+        str = str.replaceAll("https://api.tongdun.cn","http://11.111.11.1:8883/cs-api-tong");
+        System.out.println(str);
     }
 
     public List<Boolean> solute(int[] a){
@@ -67,8 +111,10 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
+
+
 
 
 

@@ -39,7 +39,7 @@ public class AES128CBCUtil {
 
 
     /**
-     * 十六进制转换字符串
+     * 十六进制字符串转字节数组
      */
     public static byte[] hexStr2Bytes(String hexStr) {
         System.out.println("in len :" + hexStr.length());
@@ -59,7 +59,7 @@ public class AES128CBCUtil {
 
 
     /**
-     * bytes转换成十六进制字符串
+     * 字节数组转换成十六进制字符串
      */
     public static String byte2HexStr(byte[] b) {
         String hs = "";
@@ -145,9 +145,10 @@ public class AES128CBCUtil {
 
 
     public static void main(String[] args) {
-        String key = "17b8b383-db07-43bd-9969-f5ca17c6b36c"; // 128 bit key
-        //String initVector = "0000000000000000"; // 16 bytes IV
-        String initVector = "dc8a8df1e9ea4ce4"; // 16 bytes IV
+        //String key = "17b8b383-db07-43bd-9969-f5ca17c6b36c"; // 128 bit key
+        //String initVector = "dc8a8df1e9ea4ce4"; // 16 bytes IV
+        String key = "c07840c3-53c9-4f2d-8490-602833a1aa88"; // 128 bit key
+        String initVector = "55c0c3cb1aa2432a"; // 16 bytes IV
         String originText = "你好世界hello world, cryptopp";
 
         String en = encrypt(key, initVector, originText);

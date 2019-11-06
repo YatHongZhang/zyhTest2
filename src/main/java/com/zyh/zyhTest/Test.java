@@ -1,7 +1,10 @@
 package com.zyh.zyhTest;
 
 
+import com.seebon.shabao.commons.utils.MessageDigestUtil;
 import com.zyh.zyhTest.utils.GroupEnum;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.bouncycastle.crypto.Digest;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -11,7 +14,9 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
+import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -21,8 +26,11 @@ import java.util.*;
 public class Test {
 
     public static void main(String[] args) throws Exception{
-        new Test().testCloseStream();
-        //System.out.println(UUID.randomUUID().toString());
+        System.out.println((new BigDecimal(0.0).setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+        System.out.println((new BigDecimal(333).setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+        System.out.println((new BigDecimal(41.2).setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+        System.out.println((new BigDecimal(993.29).setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+        System.out.println((new BigDecimal(1426.095).setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
     }
 
     public void testCloseStream() throws Exception{

@@ -96,11 +96,11 @@
 			<version>1.2.30</version>
 		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>com.seebon.shabao</groupId>
-			<artifactId>commons</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>-->
+			<artifactId>app-commons</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>cglib</groupId>

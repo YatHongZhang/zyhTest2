@@ -1,6 +1,8 @@
 package com.zyh.zyhTest.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -10,7 +12,10 @@ import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import javax.crypto.Cipher;
+
+import com.sun.deploy.net.URLEncoder;
 import org.apache.commons.codec.binary.Base64;
+import org.bouncycastle.jce.provider.JDKKeyFactory;
 
 /**
  * RSA加解密工具
@@ -79,30 +84,49 @@ public class RSAUtil {
      * @param publicKey 公钥
      * @return
      */
-    public static String encrypt(String data, PublicKey publicKey) throws Exception {
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        int inputLen = data.getBytes().length;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int offset = 0;
-        byte[] cache;
-        int i = 0;
-        // 对数据分段加密
-        while (inputLen - offset > 0) {
-            if (inputLen - offset > MAX_ENCRYPT_BLOCK) {
-                cache = cipher.doFinal(data.getBytes("UTF-8"), offset, MAX_ENCRYPT_BLOCK);
-            } else {
-                cache = cipher.doFinal(data.getBytes("UTF-8"), offset, inputLen - offset);
+    public static String encrypt(String data, PublicKey publicKey) {
+        ByteArrayOutputStream out = null;
+
+        try{
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+
+            //编码 防止前端解密后有乱码
+            data = URLEncoder.encode(data,"UTF-8");
+            //加号替换为20%
+            data = data.replaceAll("\\+","20%");
+
+            int inputLen = data.getBytes().length;
+            out = new ByteArrayOutputStream();
+            int offset = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段加密
+            while (inputLen - offset > 0) {
+                if (inputLen - offset > MAX_ENCRYPT_BLOCK) {
+                    cache = cipher.doFinal(data.getBytes("UTF-8"), offset, MAX_ENCRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(data.getBytes("UTF-8"), offset, inputLen - offset);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offset = i * MAX_ENCRYPT_BLOCK;
             }
-            out.write(cache, 0, cache.length);
-            i++;
-            offset = i * MAX_ENCRYPT_BLOCK;
+            byte[] encryptedData = out.toByteArray();
+            // 获取加密内容使用base64进行编码, 返回加密后的字符串
+            return Base64.encodeBase64String(encryptedData);
+        }catch (Exception e){
+            //do something...
+            throw new RuntimeException(e);
+        }finally {
+            if(out != null){
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    //do something...
+                }
+            }
         }
-        byte[] encryptedData = out.toByteArray();
-        out.close();
-        // 获取加密内容使用base64进行编码,并以UTF-8为标准转化成字符串
-        // 加密后的字符串
-        return new String(Base64.encodeBase64String(encryptedData));
     }
 
     /**
@@ -111,30 +135,46 @@ public class RSAUtil {
      * @param privateKey 私钥
      * @return
      */
-    public static String decrypt(String data, PrivateKey privateKey) throws Exception {
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
-        byte[] dataBytes = Base64.decodeBase64(data);
-        int inputLen = dataBytes.length;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int offset = 0;
-        byte[] cache;
-        int i = 0;
-        // 对数据分段解密
-        while (inputLen - offset > 0) {
-            if (inputLen - offset > MAX_DECRYPT_BLOCK) {
-                cache = cipher.doFinal(dataBytes, offset, MAX_DECRYPT_BLOCK);
-            } else {
-                cache = cipher.doFinal(dataBytes, offset, inputLen - offset);
+    public static String decrypt(String data, PrivateKey privateKey)  {
+        ByteArrayOutputStream out = null;
+        try{
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+
+            //base64 decode
+            byte[] dataBytes = Base64.decodeBase64(data);
+            int inputLen = dataBytes.length;
+            out = new ByteArrayOutputStream();
+            int offset = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段解密
+            while (inputLen - offset > 0) {
+                if (inputLen - offset > MAX_DECRYPT_BLOCK) {
+                    cache = cipher.doFinal(dataBytes, offset, MAX_DECRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(dataBytes, offset, inputLen - offset);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offset = i * MAX_DECRYPT_BLOCK;
             }
-            out.write(cache, 0, cache.length);
-            i++;
-            offset = i * MAX_DECRYPT_BLOCK;
+            byte[] decryptedData = out.toByteArray();
+            // 解密后的内容
+            String str = new String(decryptedData, "UTF-8");
+            // URLdecode
+            return URLDecoder.decode(str,"UTF-8");
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }finally {
+            if (out != null){
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        byte[] decryptedData = out.toByteArray();
-        out.close();
-        // 解密后的内容
-        return new String(decryptedData, "UTF-8");
     }
 
     /**
@@ -201,5 +241,7 @@ public class RSAUtil {
             System.out.print("加解密异常");
         }
     }
+
+
 
 }
